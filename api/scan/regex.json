@@ -1,0 +1,27 @@
+{
+    "patterns":{
+        "general":[
+            {
+                "regex":"^([a-zA-Z0-9-]+)\\s(\\d+(\\.+\\w+)+)$",
+                "format":"%s %s"
+            }
+        ],
+        "services":{
+            "MySQL":{
+                "regex":"^MySQL\\s(\\d+\\.\\d+\\.\\d+[a-zA-Z]?)",
+                "format":"MySQL %s",
+                "service":"MySQL"
+            },
+            "OpenSSH":{
+                "regex":"^OpenSSH\\s+(\\d+(\\.\\d+)*[a-zA-Z]?\\d*)",
+                "format":"OpenSSH %s",
+                "service":"OpenSSH"
+            },
+            "apache httpd":{
+                "regex":"^Apache\\s+httpd\\s+(\\d+(\\.\\d+)*)",
+                "format":"http server %s",
+                "service":"http server"
+            }
+        }
+    }
+}

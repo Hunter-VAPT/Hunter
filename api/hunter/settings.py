@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REGEX_FILE_PATH = os.path.join(BASE_DIR,'scan', 'regex.json')
 
 # Application definition
 
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'authentication',
     "celery",
     "kombu.transport",
+    'scan'
 
 ]
 
