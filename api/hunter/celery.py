@@ -6,7 +6,7 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hunter.settings')
 
-app = Celery('hunter', broker='amqp://root:root@rabbitmq:5672//')
+app = Celery('hunter', broker='amqp://root:root@rabbitmq:5672//',backend='rpc://')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
