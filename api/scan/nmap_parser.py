@@ -14,9 +14,12 @@ class NmapParser:
         for ip in ips:
             ports = result[ip]["ports"]
             for port in ports:
-                service = port['service']
-                if "version" in service and "product" in service:
-                    self.extract_service_version(service)
+                try:
+                    service = port['service']
+                    if "version" in service and "product" in service:
+                        self.extract_service_version(service)
+                except:
+                    continue
 
     def extract_service_version(self, service):
         line = service["product"] + " " + service["version"]
