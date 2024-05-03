@@ -18,13 +18,14 @@ services:
       - RABBITMQ_DEFAULT_USER=root
       - RABBITMQ_DEFAULT_PASS=root
       - RABBITMQ_DEFAULT_VHOST=/
+      - C_FORCE_ROOT="true"
     ports:
       - "5672:5672"
       - "15672:15672"
 
-  celery:
-    container_name: celery
-    command: celery -A hunter worker -l INFO
+  celery_scraper:
+    container_name: celery_scraper
+    command: celery -A hunter worker -l INFO -Q scraper
     build:
       context: './api'
     volumes:
@@ -32,5 +33,39 @@ services:
     depends_on:
       - api
       - rabbitmq
+
+  celery_scanhandler:
+    container_name: celery_scanhandler
+    command: celery -A hunter worker -l INFO -Q scanhandler
+    build:
+      context: './api'
+    volumes:
+      - './api:/app'
+    depends_on:
+      - api
+      - rabbitmq
+
+  celery_port_scanner:
+    container_name: celery_port_scanner
+    command: celery -A hunter worker -l INFO -Q port_scanner
+    build:
+      context: './api'
+    volumes:
+      - './api:/app'
+    depends_on:
+      - api
+      - rabbitmq
+
+  celery_uphosts_scanner:
+    container_name: celery_uphosts_scanner
+    command: celery -A hunter worker -l INFO -Q uphosts_scanner
+    build:
+      context: './api'
+    volumes:
+      - './api:/app'
+    depends_on:
+      - api
+      - rabbitmq
+
 
 # playwright install
