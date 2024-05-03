@@ -3,6 +3,7 @@ import React from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
 import './ScanStyles.css';
+import { Link } from "react-router-dom";
 
 export default function ScanResult() {
 
@@ -59,9 +60,9 @@ export default function ScanResult() {
             name: "Details",
             options: {
                 customBodyRender: (value) => (
-                    <a href="./Vuln" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    <Link to="/Vuln" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                         Extend
-                    </a>
+                    </Link>
                 )
             }
         },

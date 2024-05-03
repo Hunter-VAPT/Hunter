@@ -4,6 +4,7 @@ import PopupMessage from "../components/PopupMessage"; // Adjust the path as nee
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
 import './ScanStyles.css';
+import { Link } from 'react-router-dom';
 
 export default function Scans() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,9 +47,9 @@ export default function Scans() {
       name: "Result",
       options: {
         customBodyRender: () => (
-          <a href="./ScanResult" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <Link to="/ScanResult" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Show Result
-          </a>
+          </Link>
         ),
       },
     },

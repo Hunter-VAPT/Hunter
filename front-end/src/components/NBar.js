@@ -1,24 +1,28 @@
 import { Component } from 'react';
 import { MenuData } from './MenuData';
 import "./NBarStyles.css"
+import { Link } from "react-router-dom";
 
 class NBar extends Component {
     render() {
         return (
             <nav className='NavbarItems'>
-                <a href='/home' className='logoA'>
+                <Link to='/home' className='logoA'>
                     <h1 className='logo'>
                          <i className="fa-solid fa-shield-halved"></i>
                          <span className='logoText'>Hunter</span>
                     </h1>
-                </a>
+                </Link>
 
                 <ul className='nav-menu'>
                     {MenuData.map((item, index) => {
                         return (
-                            <li key={index}><a href={item.url} className={item.cName}>
+                            <li key={index}>
+                                
+                                <Link to={item.url} className={item.cName}>
                                 <i className={item.icon}></i>{item.title}
-                            </a></li>
+                            </Link>
+                            </li>
                         );
                     })}
                 </ul>
