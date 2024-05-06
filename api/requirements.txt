@@ -5,3 +5,4 @@ sqlparse==0.4.4
 celery==5.3.6
 python3-nmap
 pytest-playwright
+django-cors-headers

@@ -54,19 +54,20 @@ class Service(models.Model):
     class Meta:
         db_table = 'services'
 
-class Service_versions(models.Model):
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    version = models.CharField(max_length=100,null=True,blank=True)
-    class Meta:
-        db_table = 'service_versions'
-
-class Port(models.Model):
-    host = models.ForeignKey(Host, on_delete=models.CASCADE)
-    port_number = models.CharField(max_length=100)
-    service_version = models.ForeignKey(Service_versions, on_delete=models.CASCADE)
-
 class Vulnerability(models.Model):
     cve = models.CharField(max_length=20, unique=True)
     description = models.TextField()
     score = models.FloatField()
-    affected_versions = models.ManyToManyField(Service_versions)
+
+class Service_version(models.Model):
+    service = models.ForeignKey(Service, on_delete=models.CASCADE,related_name='services')
+    version = models.CharField(max_length=100,null=True,blank=True)
+    vulnerabilities = models.ManyToManyField(Vulnerability)
+    class Meta:
+        db_table = 'service_version'
+
+class Port(models.Model):
+    host = models.ForeignKey(Host, on_delete=models.CASCADE,related_name='ports')
+    port_number = models.CharField(max_length=100)
+    service_version = models.ForeignKey(Service_version, on_delete=models.CASCADE,related_name='service_versions')
+

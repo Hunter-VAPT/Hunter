@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task, group
 from nmap3 import NmapHostDiscovery,nmap3
-from .models import Input, Host, Scan, Port,Service,Service_versions,Vulnerability
+from .models import Input, Host, Scan, Port,Service,Service_version,Vulnerability
 from django.utils import timezone
 from celery.result import allow_join_result
 from .nmap_parser import NmapParser
@@ -33,7 +33,7 @@ def portScan(scan_id, ip):
                          print(e)
                          continue
                     service, created = Service.objects.get_or_create(name=product)
-                    service_version, created = Service_versions.objects.get_or_create(service=service,version=version)
+                    service_version, created = Service_version.objects.get_or_create(service=service,version=version)
                     port = Port.objects.create(host=host,port_number=port_info['portid'],service_version=service_version)
                     fetch_vulnerabilities.delay(product,version)
     host.status = 'completed'
@@ -44,8 +44,8 @@ def portScan(scan_id, ip):
 def fetch_vulnerabilities(product, version):
     # todo: create global browser instance
         service = Service.objects.get(name=product)
-        service_version = Service_versions.objects.get(service=service, version=version)
-        vulnerabilities_queryset = Vulnerability.objects.filter(affected_versions=service_version)
+        service_version = Service_version.objects.get(service=service, version=version)
+        vulnerabilities_queryset = service_version.vulnerabilities.all()
         vulnerabilities = [] 
         if not vulnerabilities_queryset.exists():
             with sync_playwright() as p:
@@ -81,7 +81,8 @@ def fetch_vulnerabilities(product, version):
                         'score': vulnerability['score'],
                     }
                 )
-                vuln.affected_versions.add(service_version)
+                service_version.vulnerabilities.add(vuln)
+                # vuln.affected_versions.add(service_version)
         # return vulnerabilities
 
 

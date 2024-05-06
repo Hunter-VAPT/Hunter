@@ -20,16 +20,18 @@ def signup(request):
         user.save()
         token = Token.objects.create(user=user)
         return Response({'token':token.key,'user':serializer.data})
-    return Response({'errors':serializer.errors})
+    return Response({'errors':serializer.errors},status=400)
 
 @api_view(['POST'])
 def signin(request):
     try:
         user = User.objects.get(username=request.data['username'])
     except:
-        return Response({'errors':'Username or Password is not valid'})
+        return Response({'error': 'Username or Password is not valid'}, status=400)
     if not user.check_password(request.data['password']):
-        return Response({'errors':'Username or Password is not valid'})
+        return Response({'error': 'Username or Password is not valid'}, status=400)
+
+
     
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)

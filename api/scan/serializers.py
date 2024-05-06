@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Scan, Input, Host, Service, Service_versions, Port, Vulnerability
+from .models import Scan, Input, Host, Service, Service_version, Port, Vulnerability
 
 class InputSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,13 +11,6 @@ class InputSerializer(serializers.ModelSerializer):
 #         model = Host
 #         fields = ['ip_address', 'last_scanned', 'status']
 
-class PortSerializer(serializers.ModelSerializer):
-    service_version = serializers.PrimaryKeyRelatedField(read_only=True)
-
-    class Meta:
-        model = Port
-        fields = ['port_number', 'service_version']
-
 
 class VulnerabilitySerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,14 +18,24 @@ class VulnerabilitySerializer(serializers.ModelSerializer):
         fields = ['cve', 'description', 'score']
 
 
-
 class ServiceVersionsSerializer(serializers.ModelSerializer):
     vulnerabilities = VulnerabilitySerializer(many=True, read_only=True)
 
     class Meta:
-        model = Service_versions
+        model = Service_version
         fields = ['version', 'vulnerabilities']
 
+class PortSerializer(serializers.ModelSerializer):
+    service_name = serializers.SerializerMethodField()
+    service_version = serializers.CharField(source='service_version.version', read_only=True)
+    vulnerabilities = VulnerabilitySerializer(many=True, read_only=True, source='service_version.vulnerabilities')
+
+    class Meta:
+        model = Port
+        fields = ['port_number', 'service_name', 'service_version','vulnerabilities']
+
+    def get_service_name(self, obj):
+        return obj.service_version.service.name if obj.service_version.service else None
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -46,17 +49,17 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 class HostSerializer(serializers.ModelSerializer):
     ports = PortSerializer(many=True, read_only=True)
-    services = ServiceSerializer(source='service_set', many=True, read_only=True)
+    # services = ServiceSerializer(source='service_set', many=True, read_only=True)
 
     class Meta:
         model = Host
-        fields = ['ip_address', 'last_scanned', 'status', 'ports', 'services']
+        # fields = ['ip_address', 'last_scanned', 'status', 'ports', 'services']
+        fields = ['id','ip_address', 'last_scanned', 'status', 'ports']
 
 
 
 class ScanSerializer(serializers.ModelSerializer):
-    inputs =  InputSerializer(many=True,read_only=True)
     hosts =  HostSerializer(many=True,read_only=True)
     class Meta:
         model = Scan
-        fields = ['id','user','start_time','end_time','inputs','hosts','status']
+        fields = ['id','user','name','start_time','end_time','hosts','status']

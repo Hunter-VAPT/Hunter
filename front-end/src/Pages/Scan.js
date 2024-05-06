@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NBar from "../components/NBar";
 import PopupMessage from "../components/PopupMessage"; // Adjust the path as needed
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
 import './ScanStyles.css';
 import { Link } from 'react-router-dom';
+import api from '../api/axios';
 
-export default function Scans() {
+
+export default function Scan() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [status, setStatus] = useState(0); // 0 for "Running", 1 for "Completed"
+  const [data,setData] = useState([]);
+  const SCANS_URL = 'scan/all';
 
   const columns = [
     { name: "Scan Name" },
@@ -18,8 +22,8 @@ export default function Scans() {
       name: "Status",
       options: {
         customBodyRender: (value) => (
-          <span className={`font-bold ${value === 0 ? 'text-red-500' : 'text-green-500'}`}>
-            {value === 0 ? (
+          <span className={`font-bold ${value ===  'ongoing'  ? 'text-red-500' : 'text-green-500'}`}>
+            {value === 'ongoing' ? (
               <div className="flex items-center">
                 Running
                 <div className="ml-2">
@@ -46,8 +50,8 @@ export default function Scans() {
     {
       name: "Result",
       options: {
-        customBodyRender: () => (
-          <Link to="/ScanResult" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        customBodyRender: (url) => (
+          <Link to={url} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Show Result
           </Link>
         ),
@@ -55,44 +59,6 @@ export default function Scans() {
     },
   ];
 
-  const data = [
-    ["New April University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 7, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    ["Home Network Scan", "January 31, 2024", status, "Open"],
-    ["University Scan", "April 31, 2022", 1, "Open"],
-    // Add more data as needed
-  ];
 
   const options = {
     responsive: 'standard',
@@ -145,6 +111,20 @@ export default function Scans() {
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
+
+  useEffect(()=>{
+    (async function(){
+      const response = await api.get(SCANS_URL);
+      
+      if(response.status === 200){
+        let tableDate = response.data.map((row)=>{
+          return [row.name,row.start_time,row.status,`${row.id}`];
+        });
+        setData(tableDate)
+      }
+      
+      })()
+  },[])
 
   return (
     <div>

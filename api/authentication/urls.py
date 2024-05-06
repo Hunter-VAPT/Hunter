@@ -4,5 +4,5 @@ from .import views
 urlpatterns = [
     path('signup', views.signup),
     path('signin',views.signin),
-    path('test_token',views.test_token),
+    path('token',views.test_token),
 ]
