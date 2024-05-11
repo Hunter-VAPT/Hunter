@@ -7,9 +7,10 @@ import { MdContacts } from "react-icons/md";
 
 export default function Contact() {
   return (
-    <div className="flex justify-center items-center h-screen bg-white">
-      <div className="rounded-2xl p-16 custom-shadow text-center">
+    <>
         <NBar />
+    <div className="flex justify-center items-center h-screen bg-white">
+      <div className="form-container rounded-2xl w-6/12 p-20 custom-shadow text-center">
         <div className="flex items-center justify-center mb-4">
           <MdContacts className="text-blue-500 mr-2 text-3xl" />
           <h2 className="text-3xl font-bold mb-0 mr-3">Contact</h2>
@@ -19,21 +20,21 @@ export default function Contact() {
           <button
             className="flex items-center justify-start bg-black text-white py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
             onClick={() => window.open('https://twitter.com/ImY7Ya', '_blank')}
-          >
+            >
             <FaXTwitter className="ml-6" />
             <span className='ml-2'>Yahya</span>
           </button>
           <button
             className="flex items-center justify-start bg-black text-white py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
             onClick={() => window.open('https://www.linkedin.com/in/yahyamajrashi', '_blank')}
-          >
+            >
             <FaLinkedin className="ml-6" />
             <span className='ml-2'>Yahya</span>
           </button>
           <button
             className="flex items-center justify-start bg-black text-white py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
             onClick={() => window.open('https://twitter.com/Mohammed0x01', '_blank')}
-          >
+            >
             <FaXTwitter className="ml-6" />
             <span className='ml-2'>Mohammed</span>
 
@@ -41,7 +42,7 @@ export default function Contact() {
           <button
             className="flex items-center justify-start bg-black text-white py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
             onClick={() => window.open('https://www.linkedin.com/in/mohammed-fahd-alzahrani/', '_blank')}
-          >
+            >
             <FaLinkedin className="ml-6" />
             <span className='ml-2'>Mohammed</span>
 
@@ -49,5 +50,6 @@ export default function Contact() {
         </div>
       </div>
     </div>
+            </>
   );
 }

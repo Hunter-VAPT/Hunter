@@ -1,5 +1,4 @@
 import NBar from "../components/NBar"
-import "./HomeStyles.css";
 import Logo from "../components/Assets/HunterLogo.png";
 import { useNavigate } from 'react-router-dom';
 
@@ -17,9 +16,8 @@ function Home() {
 
     return (
         <>
-            <div className="home">
                 <NBar />
-
+            <div className="home">
                 <div className="bg-white h-screen flex items-center justify-center">
                     <div className="text-center">
                         <img

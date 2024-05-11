@@ -7,9 +7,10 @@ import { FiInfo } from "react-icons/fi";
 
 export default function Manual() {
   return (
-    <div className="bg-white min-h-screen">
-      <div className="container mx-auto py-12 px-4">
+    <>
         <NBar />
+    <div className="bg-white">
+      <div className="form-container mx-auto py-12 px-4">
         <h2 className="text-3xl font-bold mb-8 text-center mr-7	">
           <FaBook className="inline-block mr-2 text-blue-500 text-3xl" />
           Manual
@@ -45,5 +46,6 @@ export default function Manual() {
 
       </div>
     </div>
+    </>
   );
 }

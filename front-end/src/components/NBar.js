@@ -1,43 +1,49 @@
-import { MenuData } from './MenuData';
-import "./NBarStyles.css"
+import { MenuData } from "./MenuData";
+import "./NBarStyles.css";
 import { Link } from "react-router-dom";
-import { useAuth } from '../context/context';
+import { useAuth } from "../context/context";
 
-export const  NBar = ()=>{
+export const NBar = () => {
+  const { user } = useAuth();
 
-    const {user} = useAuth();
+  return (
+    <nav>
+      <div className="NavbarItems">
+        <Link to="/" className="logoA">
+          <h1 className="logo">
+            <i className="fa-solid fa-shield-halved"></i>
+            <span className="logoText">Hunter</span>
+          </h1>
+        </Link>
 
-        return (
-            <nav className='NavbarItems'>
-                <Link to='/' className='logoA'>
-                    <h1 className='logo'>
-                         <i className="fa-solid fa-shield-halved"></i>
-                         <span className='logoText'>Hunter</span>
-                    </h1>
+        <ul className="nav-menu">
+          {MenuData.map((item, index) => {
+            return (
+              <li key={index}>
+                <Link to={item.url} className={item.cName}>
+                  <i className={item.icon}></i>
+                  {item.title}
                 </Link>
-
-                <ul className='nav-menu'>
-                    {MenuData.map((item, index) => {
-                        return (
-                            <li key={index}>
-                                <Link to={item.url} className={item.cName}>
-                                <i className={item.icon}></i>{item.title}
-                            </Link>
-                            </li>
-                        );
-                    })}
-                    {user  ?    <li key={98}>
-                                <Link to='/logout' className='nav-links-mobile'>
-                                logout
-                            </Link>
-                            </li> :   <li key={99}>
-                                <Link to='/login' className='nav-links-mobile'>
-                                login
-                            </Link>
-                            </li>}
-                </ul>
-            </nav>
-        );
-    }
+              </li>
+            );
+          })}
+          {user ? (
+            <li key={98}>
+              <Link to="/logout" className="nav-links-mobile">
+                logout
+              </Link>
+            </li>
+          ) : (
+            <li key={99}>
+              <Link to="/login" className="nav-links-mobile">
+                login
+              </Link>
+            </li>
+          )}
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
 export default NBar;

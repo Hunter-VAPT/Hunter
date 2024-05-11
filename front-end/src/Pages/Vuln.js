@@ -2,7 +2,6 @@ import NBar from "../components/NBar"
 import React, { useEffect, useState } from 'react'
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import MUIDataTable from "mui-datatables";
-import './ScanStyles.css';
 import { Link, useParams } from "react-router-dom";
 import api from "../api/axios";
 
@@ -66,9 +65,9 @@ export default function Vuln() {
         {
             name: "Details",
             options: {
-                customBodyRender: (value) => <Link to={value} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                customBodyRender: (value) => <a target="__blank" href={`https://nvd.nist.gov/vuln/detail/${value}`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                     Extend
-                </Link>,
+                </a>,
             }
         }
         
@@ -92,7 +91,7 @@ export default function Vuln() {
     const options = {
         disableSelectionOnClick: 'disable',
         responsive: 'standard', // Ensure table is responsive
-        selectableRows: 'none', // Disable row selection
+        selectableRows: false, // Disable row selection
         tableBodyHeight: '600px', // Set height of table body
         tableBodyMaxHeight: 'none', // Remove max height of table body
         pagination: true,
@@ -144,7 +143,7 @@ export default function Vuln() {
                         severity = "Low"
                         vulnerabilities.low += 1;
                     }
-                    dataTable.push([vulnerability.cve, `Port: ${port.port_number},Service: ${port.service_name}, Version: ${port.service_version}`, vulnerability.description, severity, `/scan/${scan_id}`])
+                    dataTable.push([vulnerability.cve, `Port: ${port.port_number},Service: ${port.service_name}, Version: ${port.service_version}`, vulnerability.description, severity, vulnerability.cve])
                 }
             }
             setData(dataTable)
@@ -155,7 +154,7 @@ export default function Vuln() {
     return (
         <div>
             <NBar />
-            <div className="tableStyle">
+            <div className="container mx-auto">
                 <ThemeProvider theme={getMuiTheme()}>
                     <MUIDataTable
                         title={""}

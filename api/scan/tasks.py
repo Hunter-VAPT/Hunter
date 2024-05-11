@@ -16,7 +16,7 @@ def portScan(scan_id, ip):
     print(f"Scanning {ip}...")
     nmap = nmap3.Nmap()
     try:
-        result = nmap.nmap_version_detection(ip,arg='-sV -Pn -T4 --version-intensity 5 -n')
+        result = nmap.nmap_version_detection(ip,arg='-O -sV -Pn -T4 --version-intensity 5 -n')
     except Exception as e:
         print(f"error happened in nmap :{e}")
     scan = Scan.objects.get(pk=scan_id)
@@ -24,6 +24,7 @@ def portScan(scan_id, ip):
     NmapParser(regex_file=settings.REGEX_FILE_PATH).filter_nmap_output(result)
     resultList = list(result.items())[:-3]
     for ip, details in resultList:
+            print(details['osmatch'])
             ports = details['ports']
             for port_info in ports:
                     try:
@@ -42,7 +43,6 @@ def portScan(scan_id, ip):
 
 @shared_task(soft_time_limit=None, time_limit=None)
 def fetch_vulnerabilities(product, version):
-    # todo: create global browser instance
         service = Service.objects.get(name=product)
         service_version = Service_version.objects.get(service=service, version=version)
         vulnerabilities_queryset = service_version.vulnerabilities.all()
@@ -55,23 +55,6 @@ def fetch_vulnerabilities(product, version):
                 scraper = CVEdetails(page)
                 vulnerabilities = scraper.getVulnerabilities(product, version)
 
-        # if not vulnerabilities_queryset.exists():
-        #     vulnerabilities = []
-        #     for vulnerability in vulnerabilities_queryset:
-        #         vulnerability_data = {
-        #             'cve': vulnerability.cve,
-        #             'description': vulnerability.description,
-        #             'score': vulnerability.score,
-        #         }
-        #         vulnerabilities.append(vulnerability_data)
-        # else:
-        #     with sync_playwright() as p:
-        #         browser = p.chromium.launch(headless=True)
-        #         page = browser.new_page()
-
-        #         scraper = CVEdetails(page)
-        #         vulnerabilities = scraper.getVulnerabilities(product, version)
-
         if vulnerabilities is not None:
             for vulnerability in vulnerabilities:
                 vuln, created = Vulnerability.objects.get_or_create(
@@ -82,16 +65,14 @@ def fetch_vulnerabilities(product, version):
                     }
                 )
                 service_version.vulnerabilities.add(vuln)
-                # vuln.affected_versions.add(service_version)
-        # return vulnerabilities
 
 
 @shared_task
 def handleScan(scan_id,cidrs):
-    print('handling scan !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     with allow_join_result():
         try:
             upHosts = scan_up_hosts.apply_async(args=[scan_id,cidrs]).get()
+            print(upHosts)
         except Exception as e:
              print(f"error in scan_up_hosts {e}")
         task_group = group(portScan.s(scan_id, ip) for ip in upHosts)

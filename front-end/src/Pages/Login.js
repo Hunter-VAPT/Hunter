@@ -44,16 +44,17 @@ export const Login = () => {
             setUser(response.data.user)
             navigate('/',{replace:true});
         } catch (error) {
-            if(error.request.status === 400){
-                setError(error.response.data.error)
+            if(error.request.status === 400 || error.request.status === 403){
+                setError('Username or Password is not valid')
             }
         }
     }
 
     return (
-        <div className='background'>
-            <div className='container'>
+        <>
                 <NBar />
+        <div className='background'>
+            <div className='form-container'>
                 <div className="header">
                     <div className="text">Login</div>
                     <div className="underline"></div>
@@ -78,5 +79,6 @@ export const Login = () => {
                 </div>
             </div>
             </div>
+        </>
     )
 }

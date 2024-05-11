@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './Pages/Home';
 import Vuln from './Pages/Vuln';
 import ScanResult from './Pages/ScanResult';
 import Contact from './Pages/Contact';
 import Manual from './Pages/Manual';
-import { LoginSignup } from './components/LoginSignup/LoginSignup';
 import Scan from './Pages/Scan';
 import AuthProvider from './context/context';
 import PrivateRoute from './utils/PrivateRoute';

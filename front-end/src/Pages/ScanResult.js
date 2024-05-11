@@ -2,7 +2,6 @@ import NBar from "../components/NBar";
 import React, { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
-import './ScanStyles.css';
 import { Link, useParams } from "react-router-dom";
 import api from "../api/axios";
 
@@ -75,20 +74,11 @@ export default function ScanResult() {
         },
     ];
 
-    // const data = [
-    //     ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-    //     ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-    //     ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-    //     ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-    //     ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-    //     ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-
-    // ];
 
     const options = {
         disableSelectionOnClick: 'disable',
         responsive: 'standard',
-        selectableRows: 'none',
+        selectableRows:false, 
         tableBodyHeight: '600px',
         tableBodyMaxHeight: 'none',
         pagination: true,
@@ -177,7 +167,7 @@ export default function ScanResult() {
         <div>
             <NBar />
 
-            <div className="tableStyle">
+            <div className="container mx-auto">
                 <ThemeProvider theme={getMuiTheme()}>
                     <MUIDataTable
                         title={""}

@@ -2,7 +2,7 @@
     background: white;
 }
 
-.container {
+.form-container {
     display: flex;
     flex-direction: column;
     margin: auto;

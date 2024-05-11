@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Login.css'
 import user_icon from '../components/Assets/person.png'
 import email_icon from '../components/Assets/email.png'
 import password_icon from '../components/Assets/password.png'
@@ -54,9 +53,10 @@ export const Signup = () => {
     }
 
     return (
-        <div className='background'>
-            <div className='container'>
+        <>
                 <NBar />
+        <div className='background'>
+            <div className='form-container'>
                 <div className="header">
                     <div className="text">Signup</div>
                     <div className="underline"></div>
@@ -89,5 +89,6 @@ export const Signup = () => {
                 </div>
             </div>
             </div>
+                        </>
     )
 }

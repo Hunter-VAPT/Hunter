@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import NBar from "../components/NBar";
-import PopupMessage from "../components/PopupMessage"; // Adjust the path as needed
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
-import './ScanStyles.css';
 import { Link } from 'react-router-dom';
 import api from '../api/axios';
-
+import { NewScanButton } from '../components/NewScanButton';
+import '../index.css'
+import './ScanStyles.css'
 
 export default function Scan() {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +51,7 @@ export default function Scan() {
       name: "Result",
       options: {
         customBodyRender: (url) => (
-          <Link to={url} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <Link to={url}  className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Show Result
           </Link>
         ),
@@ -61,56 +61,34 @@ export default function Scan() {
 
 
   const options = {
-    responsive: 'standard',
-    selectableRows: true,
-    tableBodyHeight: '600px',
     tableBodyMaxHeight: 'none',
-    pagination: true, 
     filter: false,
     download: false,
-    selectableRows: 'None', // Disable row selection
-    viewColumns: false
-
+    selectableRows:false,
+    viewColumns: false,
+    pagination:false,
   };
 
   const getMuiTheme = () => createTheme({
     components: {
-        MuiTableCell: {
-            styleOverrides: {
-                root: { // Apply to both head and body
-                    paddingLeft: '8px', // Reduce the left padding
-                    paddingRight: '8px', // Maintain balance by reducing the right padding as well
-                },
-                head: {
-                    paddingLeft: '5px',
-                    paddingRight: '5px',
-                },
-                body: {
-                    paddingLeft: '20px',
-                    paddingRight: '20px',
-                }
+      MuiTableCell: {
+        styleOverrides: {
+            root: { // Apply to both head and body
+                paddingLeft: '8px', // Reduce the left padding
+                paddingRight: '8px', // Maintain balance by reducing the right padding as well
+            },
+            head: {
+                paddingLeft: '5px',
+                paddingRight: '5px',
+            },
+            body: {
+                paddingLeft: '20px',
+                paddingRight: '20px',
             }
         }
     }
-});
-
-  const handleNewScan = async () => {
-    try {
-      setIsLoading(true);
-      // Simulating a new scan creation
-      setTimeout(() => {
-        setIsPopupOpen(true);
-        setIsLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Error creating new scan:', error);
-      setIsLoading(false);
     }
-  };
-
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-  };
+});
 
   useEffect(()=>{
     (async function(){
@@ -127,10 +105,10 @@ export default function Scan() {
   },[])
 
   return (
-    <div>
+    <>
       <NBar />
 
-      <div className="tableStyle">
+      <div className="container mx-auto w-100">
         <ThemeProvider theme={getMuiTheme()}>
           <MUIDataTable
             title={""}
@@ -139,28 +117,8 @@ export default function Scan() {
             options={options}
           />
         </ThemeProvider>
-        <div className="mt-6">
-          <button
-            onClick={handleNewScan}
-            className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                Creating Scan
-                <svg className="animate-spin h-5 w-5 text-white inline-block ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V2.5a.5.5 0 011 0V4a8 8 0 01-8 8z"></path>
-                </svg>
-              </>
-            ) : (
-              'Create New Scan'
-            )}
-          </button>
-        </div>
+        <NewScanButton />
       </div>
-
-      {isPopupOpen && <PopupMessage onClose={handleClosePopup} />}
-    </div>
+    </>
   );
 }
