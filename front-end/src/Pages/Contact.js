@@ -9,8 +9,8 @@ export default function Contact() {
   return (
     <>
         <NBar />
-    <div className="flex justify-center items-center h-screen bg-white">
-      <div className="form-container rounded-2xl w-6/12 p-20 custom-shadow text-center">
+    <div className="flex justify-center items-center mt-32 bg-white">
+      <div className="rounded-2xl p-16 custom-shadow">
         <div className="flex items-center justify-center mb-4">
           <MdContacts className="text-blue-500 mr-2 text-3xl" />
           <h2 className="text-3xl font-bold mb-0 mr-3">Contact</h2>

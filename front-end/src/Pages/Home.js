@@ -18,7 +18,7 @@ function Home() {
         <>
                 <NBar />
             <div className="home">
-                <div className="bg-white h-screen flex items-center justify-center">
+                <div className="bg-white flex items-center justify-center">
                     <div className="text-center">
                         <img
                             src={Logo}

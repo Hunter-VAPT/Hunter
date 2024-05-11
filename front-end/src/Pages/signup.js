@@ -6,6 +6,7 @@ import NBar from '../components/NBar'
 import { useAuth } from '../context/context'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
+import { Link } from "react-router-dom"; 
 
 
 const SIGNUP_URL = '/auth/signup';
@@ -85,7 +86,10 @@ export const Signup = () => {
                     </div>
                 </div>
                 <div className="submit-container">
-                    <div className={"submit"} onClick={handleSignup}>Signup</div>
+                    <div className={"submit"} onClick={handleSignup}>Sign up</div>
+                    <Link className="grey-button" to="/login">Login</Link>
+
+
                 </div>
             </div>
             </div>

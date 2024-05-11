@@ -9,8 +9,8 @@ export default function Manual() {
   return (
     <>
         <NBar />
-    <div className="bg-white">
-      <div className="form-container mx-auto py-12 px-4">
+    <div className="flex justify-center items-center mt-32 bg-white">
+      <div className="rounded-2xl p-16 custom-shadow">
         <h2 className="text-3xl font-bold mb-8 text-center mr-7	">
           <FaBook className="inline-block mr-2 text-blue-500 text-3xl" />
           Manual

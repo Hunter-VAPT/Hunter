@@ -8,6 +8,7 @@ import api from '../api/axios';
 import { useAuth
  } from '../context/context'
 import { useNavigate } from 'react-router-dom'
+import { Link } from "react-router-dom"; 
 
 
 const LOGIN_URL = '/auth/signin';
@@ -76,6 +77,7 @@ export const Login = () => {
                 </div>
                 <div className="submit-container">
                     <div className={"submit"} onClick={handleLogin}>Login</div>
+                    <Link className="grey-button" to="/signup">Sign Up</Link>
                 </div>
             </div>
             </div>
