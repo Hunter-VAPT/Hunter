@@ -42,7 +42,8 @@ export default function ScanResult() {
                             <div key={index}>{os.trim()}</div>
                         ))}
                     </div>
-                )
+                ),
+                setCellProps: () => ({ style: { minWidth: "400px", maxWidth: "400px", whiteSpace: "pre-wrap" }}),
             }
         },
         {
@@ -112,8 +113,6 @@ export default function ScanResult() {
     useEffect(()=>{
         (async function(){
           const response = await api.get(SCAN_RESULT_URL);
-          // ["192.168.1.5", "Port: 3000/tcp,Service: http,Version: Node.js Express framework, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 135/tcp,Service: msrpc,Version: Microsoft Windows RPC, ⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘⁘,Port: 139/tcp,Service: netbios-ssn,Version: Microsoft Windows netbios-ssn, ", "Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", "High: 10, Medium: 7, Low: 40", "Open"],
-
           
           if(response.status === 200){
             const hosts = response.data.hosts;
@@ -154,7 +153,18 @@ export default function ScanResult() {
             }
             
             const vulns = `Critical: ${vulnerabilities.critical}, High: ${vulnerabilities.high}, Medium: ${vulnerabilities.medium}, Low: ${vulnerabilities.low}`;
-            return [host.ip_address,services,"Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", vulns, `${host.id}`];
+            let osmatch = "";
+            for (let i = 0;i <= 2;i++){
+                const os = host.os_matches[i];
+                if(!os || i >3){
+                    break;
+                }
+
+                osmatch += `${os.os_name}(${os.accuracy}%),`
+            }
+
+            // return [host.ip_address,services,"Microsoft Windows 11 21H2 (95%), Microsoft Windows Server 2022 (91%), Microsoft Windows 10 (91%),", vulns, `${host.id}`];
+            return [host.ip_address,services,osmatch, vulns, `${host.id}`];
         })
             
             setData(tableData);

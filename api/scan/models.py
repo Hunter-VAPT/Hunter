@@ -71,3 +71,10 @@ class Port(models.Model):
     port_number = models.CharField(max_length=100)
     service_version = models.ForeignKey(Service_version, on_delete=models.CASCADE,related_name='service_versions')
 
+class OSMatch(models.Model):
+    host = models.ForeignKey(Host, on_delete=models.CASCADE, related_name='os_matches')
+    os_name = models.CharField(max_length=100)
+    accuracy = models.FloatField()
+
+    class Meta:
+        verbose_name_plural = "OS Matches"

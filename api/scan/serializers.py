@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Scan, Input, Host, Service, Service_version, Port, Vulnerability
+from .models import Scan, Input, Host, Service, Service_version, Port, Vulnerability,OSMatch
 
 class InputSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,16 +46,21 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = ['name', 'versions']
 
 
+class OSMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OSMatch
+        fields = ['os_name', 'accuracy']
+
 
 class HostSerializer(serializers.ModelSerializer):
     ports = PortSerializer(many=True, read_only=True)
     # services = ServiceSerializer(source='service_set', many=True, read_only=True)
+    os_matches = OSMatchSerializer(many=True, read_only=True)
 
     class Meta:
         model = Host
         # fields = ['ip_address', 'last_scanned', 'status', 'ports', 'services']
-        fields = ['id','ip_address', 'last_scanned', 'status', 'ports']
-
+        fields = ['id','ip_address', 'last_scanned', 'status', 'ports','os_matches']
 
 
 class ScanSerializer(serializers.ModelSerializer):

@@ -66,7 +66,7 @@ export default function Scan() {
     download: false,
     selectableRows:false,
     viewColumns: false,
-    pagination:false,
+    pagination:true,
   };
 
   const getMuiTheme = () => createTheme({

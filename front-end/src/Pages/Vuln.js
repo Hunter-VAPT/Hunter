@@ -134,7 +134,7 @@ export default function Vuln() {
                     if(vulnerability.score >= 9 && vulnerability.score<= 10){
                         severity = "Critical"
                     }else if(vulnerability.score >= 7 && vulnerability.score<= 8.9){
-                        severity = "HIgh"
+                        severity = "High"
                         vulnerabilities.high += 1;
                     }else if(vulnerability.score >= 4 && vulnerability.score<= 6.9){
                         severity = "Medium"

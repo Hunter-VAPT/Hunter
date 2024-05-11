@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task, group
 from nmap3 import NmapHostDiscovery,nmap3
-from .models import Input, Host, Scan, Port,Service,Service_version,Vulnerability
+from .models import Input, Host, Scan, Port,Service,Service_version,Vulnerability,OSMatch
 from django.utils import timezone
 from celery.result import allow_join_result
 from .nmap_parser import NmapParser
@@ -24,7 +24,9 @@ def portScan(scan_id, ip):
     NmapParser(regex_file=settings.REGEX_FILE_PATH).filter_nmap_output(result)
     resultList = list(result.items())[:-3]
     for ip, details in resultList:
-            print(details['osmatch'])
+            osMatch = details['osmatch']
+            for os in osMatch:
+                 OSMatch.objects.create(host=host, os_name=os.get('name'), accuracy=os.get('accuracy'))
             ports = details['ports']
             for port_info in ports:
                     try:
