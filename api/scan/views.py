@@ -20,9 +20,9 @@ def new_scan(request):
         return Response({'error': 'IP addresses are required'}, status=status.HTTP_400_BAD_REQUEST)
 
     ips_list = ips.split(',')
-    # for ip in ips_list:
-    #     if not isValid(ip.strip()):
-    #         return Response({'error': f'Invalid IP: {ip}'}, status=status.HTTP_400_BAD_REQUEST)
+    for ip in ips_list:
+        if not isValid(ip.strip()):
+            return Response({'error': f'Invalid IP: {ip}'}, status=status.HTTP_400_BAD_REQUEST)
 
     if ips_list:
         print(ips_list)
