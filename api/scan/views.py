@@ -42,7 +42,7 @@ def list_scan(request):
 @permission_classes([IsAuthenticated])
 def scan_detail(request, id):
     try:
-        scan = Scan.objects.get(pk=id)
+        scan = Scan.objects.get(pk=id,user=request.user)
     except Scan.DoesNotExist:
         return Response({'error': 'Scan not found'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -54,7 +54,7 @@ def scan_detail(request, id):
 @permission_classes([IsAuthenticated])
 def host_detail(request, scan_id,host_id):
     try:
-        scan = Scan.objects.get(pk=scan_id)
+        scan = Scan.objects.get(pk=scan_id,user=request.user)
         host = scan.hosts.get(id=host_id)
     except (Scan.DoesNotExist,Host.DoesNotExist):
         return Response({'error': 'Host not found'}, status=status.HTTP_404_NOT_FOUND)
