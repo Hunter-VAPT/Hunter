@@ -72,6 +72,3 @@ services:
     depends_on:
       - api
       - rabbitmq
-
-
-# playwright install
