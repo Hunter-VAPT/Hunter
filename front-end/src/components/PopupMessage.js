@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../api/axios';
+import { useGlobalContext } from '../context/globalContext';
 
 const SCAN_URL = 'scan/'
 
@@ -7,6 +8,7 @@ const PopupMessage = ({ closePopup }) => {
     const [ipsValue, setIpsValue] = useState('');
     const [nameValue, setNameValue] = useState('');
     const [error, setError] = useState('');
+    const {scans, setScans} = useGlobalContext();
     const handleInputChange = (e) => {
         setIpsValue(e.target.value);
     };
@@ -23,6 +25,9 @@ const PopupMessage = ({ closePopup }) => {
                 name: nameValue
             })
 
+            const row = response.data.scan;
+            setScans([...scans, [row.name,row.start_time,row.status,`${row.id}`]])
+            
             setError('')
             closePopup()
         } catch (error) {

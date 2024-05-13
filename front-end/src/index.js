@@ -13,6 +13,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import { Login } from './Pages/Login';
 import { Signup } from './Pages/signup';
 import Logout from './Pages/Signout';
+import GlobalContextProvider from './context/globalContext';
 
 const router = createBrowserRouter([
   {
@@ -66,9 +67,11 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
+  <GlobalContextProvider>
     <AuthProvider>
       <RouterProvider router={router}></RouterProvider>
     </AuthProvider>
+  </GlobalContextProvider>
   // </React.StrictMode>
 );
 

@@ -7,12 +7,14 @@ import api from '../api/axios';
 import { NewScanButton } from '../components/NewScanButton';
 import '../index.css'
 import './ScanStyles.css'
+import { useGlobalContext } from '../context/globalContext';
 
 export default function Scan() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [status, setStatus] = useState(0); // 0 for "Running", 1 for "Completed"
   const [data,setData] = useState([]);
+  const {scans, setScans} = useGlobalContext();
   const SCANS_URL = 'scan/all';
 
   const columns = [
@@ -91,17 +93,24 @@ export default function Scan() {
 });
 
   useEffect(()=>{
-    (async function(){
+    async function fetchScan(){
       const response = await api.get(SCANS_URL);
       
       if(response.status === 200){
         let tableDate = response.data.map((row)=>{
           return [row.name,row.start_time,row.status,`${row.id}`];
         });
-        setData(tableDate)
+        setScans(tableDate)
+
+        if (response.data.every(scan => scan.status === 'completed')) {
+          clearInterval(interval);
+        }
+    }
       }
+      fetchScan();
       
-      })()
+      const interval = setInterval(fetchScan,3000);
+      return ()=>clearInterval(interval)
   },[])
 
   return (
@@ -112,12 +121,12 @@ export default function Scan() {
         <ThemeProvider theme={getMuiTheme()}>
           <MUIDataTable
             title={""}
-            data={data}
+            data={scans}
             columns={columns}
             options={options}
           />
         </ThemeProvider>
-        <NewScanButton />
+        <NewScanButton  />
       </div>
     </>
   );
