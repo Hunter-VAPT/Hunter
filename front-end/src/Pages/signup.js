@@ -7,6 +7,7 @@ import { useAuth } from '../context/context'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import { Link } from "react-router-dom"; 
+import './Login.css'
 
 
 const SIGNUP_URL = '/auth/signup';
@@ -23,7 +24,7 @@ export const Signup = () => {
 
     async function handleSignup (){
         if(!username || !password || !confirmPassword){
-            setErrors(['all fields are required'])
+            setErrors(['All fields are required'])
             return;
         }else{
             setErrors([])
@@ -59,11 +60,11 @@ export const Signup = () => {
         <div className='background'>
             <div className='form-container'>
                 <div className="header">
-                    <div className="text">Signup</div>
+                    <div className="text">Sign up</div>
                     <div className="underline"></div>
                 </div>
 
-                {errors.length > 0 && <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 " role="alert">
+                {errors.length > 0 && <div className="flex justify-center mt-5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 " role="alert">
                     <ul className='list-disc'>
                         {errors.map((error)=>{
                             return (<li>{error}</li>)

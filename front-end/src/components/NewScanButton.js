@@ -27,7 +27,7 @@ export const NewScanButton = ()=>{
       };
     return (
         <>
-        <div className="mt-6">
+        <div className="flex justify-center mt-6">
           <button
             onClick={openPopup}
             className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}

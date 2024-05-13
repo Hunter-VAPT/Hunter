@@ -61,8 +61,8 @@ export const Login = () => {
                     <div className="underline"></div>
                 </div>
 
-                {error && <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 " role="alert">
-                    <span className="font-medium">{error}</span>
+                {error && <div className="flex justify-center mt-5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 " role="alert">
+                    <span className="font-medium ">{error}</span>
                 </div> }
 
                 <div className="inputs">
