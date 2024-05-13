@@ -7,9 +7,6 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-# TODO: input validation
-# TODO: hash password on create
-
 @api_view(['POST'])
 def signup(request):
     serializer = UserSerializer(data=request.data)
