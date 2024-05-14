@@ -16,13 +16,10 @@ export const NewScanButton = ()=>{
 
     const openPopup = async () => {
         try {
-          setIsLoading(true);
           // Simulating a new scan creation
             setIsPopupOpen(true);
-            setIsLoading(false);
         } catch (error) {
           console.error('Error creating new scan:', error);
-          setIsLoading(false);
         }
       };
     return (
